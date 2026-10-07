@@ -1,16 +1,182 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#061318"><title>MicrobeWorld — The Evolution Simulator</title><meta name="description" content="MicrobeWorld is a playable microorganism survival simulator."><link rel="stylesheet" href="/theme.css">
-</head><body>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061318">
+<title>MicrobeWorld — The Evolution Simulator</title>
+<meta name="description" content="MicrobeWorld is a playable microorganism survival simulator.">
+<link rel="stylesheet" href="./theme.css">
+</head>
+
+<body>
 <main id="app" class="app-shell">
-<section id="menuScreen" class="screen menu-screen"><div class="menu-orbit orbit-a"></div><div class="menu-orbit orbit-b"></div><div class="brand-block"><div class="brand-mark"><span></span><i></i><b></b></div><div class="eyebrow">MICROBIOLOGY × SURVIVAL</div><h1>Microbe<span>World</span></h1><p>The Evolution Simulator</p></div><div class="menu-grid"><button class="primary-btn" data-action="play">Play Survival</button><button class="secondary-btn" data-action="evolution">Evolution Run</button><button class="secondary-btn" data-action="sandbox">Sandbox</button><button class="ghost-btn" data-action="encyclopedia">Biological Encyclopedia</button></div><div class="quick-facts"><div><strong>42+</strong><span>microbial entities</span></div><div><strong>3</strong><span>game modes</span></div><div><strong>∞</strong><span>ecosystem cycles</span></div></div><p class="menu-hint">Mouse / WASD to move · Space ability · E evolve · P pause</p></section>
-<section id="encyclopediaScreen" class="screen encyclopedia-screen hidden"><div class="topbar"><div class="brand-mini"><span class="mini-dot"></span> MicrobeWorld</div><button class="icon-btn" data-action="menu">← Back</button></div><div class="encyclopedia-head"><div><div class="eyebrow">LIVING CATALOG</div><h2>Biological Encyclopedia</h2><p>Learn what the ecosystem is made of.</p></div><div class="eco-chip">simulated ecosystem v1.0</div></div><div id="encyclopediaGrid" class="encyclopedia-grid"></div></section>
-<section id="gameScreen" class="game-screen hidden"><canvas id="gameCanvas"></canvas><div class="vignette"></div><header class="hud-top"><div class="hud-title"><div class="brand-mini"><span class="mini-dot"></span> MicrobeWorld</div><span id="modeLabel" class="mode-pill">SURVIVAL</span></div><div class="hud-stats"><div class="stat-box"><span class="stat-label">MASS</span><strong id="massStat">12</strong></div><div class="stat-box"><span class="stat-label">EVO</span><strong id="evoStat">01</strong></div><div class="stat-box"><span class="stat-label">TIME</span><strong id="timeStat">00:00</strong></div></div><div class="hud-actions"><button class="hud-btn" data-action="sound" id="soundBtn">SOUND ON</button><button class="hud-btn" data-action="pause">PAUSE</button></div></header>
-<aside class="left-panel"><div class="player-card"><div class="microbe-avatar" id="microbeAvatar"><span></span><span></span><span></span></div><div><div class="small-label">YOUR MICROBE</div><strong id="speciesName">Protozoa</strong><div id="abilityName" class="ability-text">Ciliate Drift</div></div></div><div class="meter-block"><div class="meter-head"><span>HEALTH</span><strong id="healthText">100%</strong></div><div class="meter"><i id="healthBar"></i></div></div><div class="meter-block"><div class="meter-head"><span>ENERGY</span><strong id="energyText">82%</strong></div><div class="meter energy"><i id="energyBar"></i></div></div><div class="meter-block"><div class="meter-head"><span>EVOLUTION</span><strong id="evolutionText">0 / 30 XP</strong></div><div class="meter evolution"><i id="evoBar"></i></div></div></aside>
-<div class="objective-card"><div class="objective-kicker">CURRENT OBJECTIVE</div><strong id="objectiveText">Feed, grow, survive.</strong><span id="objectiveSub">Consume 5 smaller organisms</span></div>
-<aside class="right-panel"><div class="minimap-card"><div class="panel-title"><span>MINIMAP</span><span class="live-dot">● LIVE</span></div><canvas id="minimap"></canvas></div><div class="leaderboard-card"><div class="panel-title"><span>TOP CELLS</span><span>#</span></div><div id="leaderboard"></div></div></aside>
-<div class="ability-wrap"><button id="abilityBtn" class="ability-btn">SPACE <span>CILIARY BURST</span></button></div><div class="controls-card"><span>WASD / ARROWS <b>MOVE</b></span><span>SPACE <b>ABILITY</b></span><span>E <b>EVOLVE</b></span><span>P <b>PAUSE</b></span></div>
-<div id="pauseOverlay" class="overlay hidden"><div class="modal-card"><div class="eyebrow">SIMULATION PAUSED</div><h2>Hold the ecosystem.</h2><p>Resume when you're ready to return to the pond.</p><div class="modal-actions"><button class="primary-btn" data-action="pause">Resume</button><button class="secondary-btn" data-action="restart">Restart run</button><button class="ghost-btn" data-action="menu">Main menu</button></div></div></div>
-<div id="gameOverOverlay" class="overlay hidden"><div class="modal-card game-over"><div class="eyebrow danger-text">HOSTILE ECOSYSTEM</div><h2 id="gameOverTitle">Your microbe was consumed.</h2><div class="final-score"><div><span>MASS</span><strong id="finalMass">0</strong></div><div><span>ORGANISMS</span><strong id="finalEaten">0</strong></div><div><span>SURVIVED</span><strong id="finalTime">00:00</strong></div></div><button class="primary-btn" data-action="restart">Evolve again</button><button class="ghost-btn" data-action="menu">Main menu</button></div></div>
-</section></main><script src="/game.js" defer></script></body></html>
+
+<section id="menuScreen" class="screen menu-screen">
+<div class="menu-orbit orbit-a"></div>
+<div class="menu-orbit orbit-b"></div>
+<div class="brand-block">
+<div class="brand-mark"><span></span><i></i><b></b></div>
+<div class="eyebrow">MICROBIOLOGY × SURVIVAL</div>
+<h1>Microbe<span>World</span></h1>
+<p>The Evolution Simulator</p>
+</div>
+
+<div class="menu-grid">
+<button class="primary-btn" data-action="play">Play Survival</button>
+<button class="secondary-btn" data-action="evolution">Evolution Run</button>
+<button class="secondary-btn" data-action="sandbox">Sandbox</button>
+<button class="ghost-btn" data-action="encyclopedia">Biological Encyclopedia</button>
+</div>
+
+<div class="quick-facts">
+<div><strong>42+</strong><span>microbial entities</span></div>
+<div><strong>3</strong><span>game modes</span></div>
+<div><strong>∞</strong><span>ecosystem cycles</span></div>
+</div>
+
+<p class="menu-hint">Mouse / WASD to move · Space ability · E evolve · P pause</p>
+</section>
+
+<section id="encyclopediaScreen" class="screen encyclopedia-screen hidden">
+<div class="topbar">
+<div class="brand-mini"><span class="mini-dot"></span> MicrobeWorld</div>
+<button class="icon-btn" data-action="menu">← Back</button>
+</div>
+
+<div class="encyclopedia-head">
+<div>
+<div class="eyebrow">LIVING CATALOG</div>
+<h2>Biological Encyclopedia</h2>
+<p>Learn what the ecosystem is made of.</p>
+</div>
+<div class="eco-chip">simulated ecosystem v1.0</div>
+</div>
+
+<div id="encyclopediaGrid" class="encyclopedia-grid"></div>
+</section>
+
+<section id="gameScreen" class="game-screen hidden">
+
+<canvas id="gameCanvas"></canvas>
+<div class="vignette"></div>
+
+<header class="hud-top">
+<div class="hud-title">
+<div class="brand-mini"><span class="mini-dot"></span> MicrobeWorld</div>
+<span id="modeLabel" class="mode-pill">SURVIVAL</span>
+</div>
+
+<div class="hud-stats">
+<div class="stat-box"><span class="stat-label">MASS</span><strong id="massStat">12</strong></div>
+<div class="stat-box"><span class="stat-label">EVO</span><strong id="evoStat">01</strong></div>
+<div class="stat-box"><span class="stat-label">TIME</span><strong id="timeStat">00:00</strong></div>
+</div>
+
+<div class="hud-actions">
+<button class="hud-btn" data-action="sound" id="soundBtn">SOUND ON</button>
+<button class="hud-btn" data-action="pause">PAUSE</button>
+</div>
+</header>
+
+<aside class="left-panel">
+<div class="player-card">
+<div class="microbe-avatar" id="microbeAvatar">
+<span></span><span></span><span></span>
+</div>
+
+<div>
+<div class="small-label">YOUR MICROBE</div>
+<strong id="speciesName">Protozoa</strong>
+<div id="abilityName" class="ability-text">Ciliate Drift</div>
+</div>
+</div>
+
+<div class="meter-block">
+<div class="meter-head"><span>HEALTH</span><strong id="healthText">100%</strong></div>
+<div class="meter"><i id="healthBar"></i></div>
+</div>
+
+<div class="meter-block">
+<div class="meter-head"><span>ENERGY</span><strong id="energyText">82%</strong></div>
+<div class="meter energy"><i id="energyBar"></i></div>
+</div>
+
+<div class="meter-block">
+<div class="meter-head"><span>EVOLUTION</span><strong id="evolutionText">0 / 30 XP</strong></div>
+<div class="meter evolution"><i id="evoBar"></i></div>
+</div>
+</aside>
+
+<div class="objective-card">
+<div class="objective-kicker">CURRENT OBJECTIVE</div>
+<strong id="objectiveText">Feed, grow, survive.</strong>
+<span id="objectiveSub">Consume 5 smaller organisms</span>
+</div>
+
+<aside class="right-panel">
+
+<div class="minimap-card">
+<div class="panel-title">
+<span>MINIMAP</span>
+<span class="live-dot">● LIVE</span>
+</div>
+<canvas id="minimap"></canvas>
+</div>
+
+<div class="leaderboard-card">
+<div class="panel-title"><span>TOP CELLS</span><span>#</span></div>
+<div id="leaderboard"></div>
+</div>
+
+</aside>
+
+<div class="ability-wrap">
+<button id="abilityBtn" class="ability-btn">SPACE <span>CILIARY BURST</span></button>
+</div>
+
+<div class="controls-card">
+<span>WASD / ARROWS <b>MOVE</b></span>
+<span>SPACE <b>ABILITY</b></span>
+<span>E <b>EVOLVE</b></span>
+<span>P <b>PAUSE</b></span>
+</div>
+
+<div id="pauseOverlay" class="overlay hidden">
+<div class="modal-card">
+<div class="eyebrow">SIMULATION PAUSED</div>
+<h2>Hold the ecosystem.</h2>
+<p>Resume when you're ready to return to the pond.</p>
+
+<div class="modal-actions">
+<button class="primary-btn" data-action="pause">Resume</button>
+<button class="secondary-btn" data-action="restart">Restart run</button>
+<button class="ghost-btn" data-action="menu">Main menu</button>
+</div>
+</div>
+</div>
+
+<div id="gameOverOverlay" class="overlay hidden">
+<div class="modal-card game-over">
+<div class="eyebrow danger-text">HOSTILE ECOSYSTEM</div>
+<h2 id="gameOverTitle">Your microbe was consumed.</h2>
+
+<div class="final-score">
+<div><span>MASS</span><strong id="finalMass">0</strong></div>
+<div><span>ORGANISMS</span><strong id="finalEaten">0</strong></div>
+<div><span>SURVIVED</span><strong id="finalTime">00:00</strong></div>
+</div>
+
+<button class="primary-btn" data-action="restart">Evolve again</button>
+<button class="ghost-btn" data-action="menu">Main menu</button>
+</div>
+</div>
+
+</section>
+
+</main>
+
+<script src="./game.js" defer></script>
+
+</body>
+</html>
